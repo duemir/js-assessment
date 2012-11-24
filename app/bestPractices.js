@@ -8,7 +8,7 @@ if (typeof define !== 'function') { var define = require('amdefine')(module); }
 define(function() {
   return {
     globals : function() {
-      myObject = {
+      var myObject = {
         name : 'Jory'
       };
 
@@ -16,21 +16,29 @@ define(function() {
     },
 
     functions : function(flag) {
+      // passes in latest firefox without modification, doesn't pass in latest chrome
+      //if (flag) {
+      //  function getValue() { return "a"; }
+      //} else {
+      //  function getValue() { return "b"; }
+      //}
+      var getValue;
       if (flag) {
-        function getValue() { return "a"; }
+        getValue = function () { return "a"; };
       } else {
-        function getValue() { return "b"; }
+        getValue = function () { return "b"; };
       }
 
       return getValue();
     },
 
     parseInt : function(num) {
-      return parseInt(num);
+      // passes in Chrome without radix, doesn't pass in firefox without radix
+      return parseInt(num, 10);
     },
 
     identity : function(val1, val2) {
-
+      return val1 === val2;
     }
   };
 });
